@@ -5,78 +5,81 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Everything inside of our widget
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Startup Name Generator',
-      theme: new ThemeData(
-        primaryColor: Colors.white,
+      theme: ThemeData(
+        primaryColor: Colors.black38,
       ),
-      home: new RandomWords(),
+      home: RandomWords(),
     );
   }
 }
 
+// Stateful widget to hold all randomwords
 class RandomWords extends StatefulWidget {
   @override
-  createState() => new RandomWordsState();
+  createState() => RandomWordsState();
 }
 
 class RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
-  final _saved = new Set<WordPair>();
+  final _saved = Set<WordPair>();
   final _biggerFont = const TextStyle(fontSize: 18.0);
+
+  // Handler for navigating to saved words
   void _pushSaved() {
     Navigator.of(context).push(
-      new MaterialPageRoute(
+      MaterialPageRoute(
         builder: (context) {
           final tiles = _saved.map(
             (pair) {
-              return new ListTile(
-                title: new Text(
+              return ListTile(
+                title: Text(
                   pair.asPascalCase,
                   style: _biggerFont,
                 ),
               );
             },
           );
-          final divided = ListTile
-              .divideTiles(
-                context: context,
-                tiles: tiles,
-              )
-              .toList();
+          final divided = ListTile.divideTiles(
+            context: context,
+            tiles: tiles,
+          ).toList();
 
-          return new Scaffold(
-            appBar: new AppBar(
-              title: new Text('Saved Suggestions'),
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Saved Suggestions'),
             ),
-            body: new ListView(children: divided),
+            body: ListView(children: divided),
           );
         },
       ),
     );
   }
 
+// Home screen widget
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Startup Name Generator'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Startup Name Generator'),
         actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.list), onPressed: _pushSaved),
+          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
         ],
       ),
       body: _buildSugesstions(),
     );
   }
 
+// List widget
   Widget _buildSugesstions() {
-    return new ListView.builder(
+    return ListView.builder(
         padding: const EdgeInsets.all(16.0),
         // The itemBuilder callback is called once per suggested word pairing,
         // and places each suggestion into a ListTile row.
@@ -86,7 +89,7 @@ class RandomWordsState extends State<RandomWords> {
         // to see on smaller devices.
         itemBuilder: (context, i) {
           // Add a one-pixel-high divider widget before each row in theListView
-          if (i.isOdd) return new Divider();
+          if (i.isOdd) return Divider();
 
           // The syntax "i ~/ 2" divides i by 2 and returns an integer result.
           // Ex. 1, 2, 3, 4, 5 becomes 0, 1, 1, 2, 2.
@@ -101,14 +104,15 @@ class RandomWordsState extends State<RandomWords> {
         });
   }
 
+// Row widget
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
-    return new ListTile(
-      title: new Text(
+    return ListTile(
+      title: Text(
         pair.asPascalCase,
         style: _biggerFont,
       ),
-      trailing: new Icon(
+      trailing: Icon(
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
       ),

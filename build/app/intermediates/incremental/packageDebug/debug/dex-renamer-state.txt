@@ -1,4 +1,4 @@
-#Mon May 28 21:57:03 PDT 2018
-base.0=/home/thinkpad/AndroidStudioProjects/nameyourstartup/build/app/intermediates/transforms/dexMerger/debug/0
+#Thu Aug 08 08:15:02 PDT 2019
+base.0=C\:\\code\\nameyourstartup\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex
